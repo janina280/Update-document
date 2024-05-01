@@ -1,0 +1,23 @@
+﻿@page "/"
+@using UpdateDocumentState.Stateless
+
+<PageTitle>DocumentState</PageTitle>
+
+<div class="d-flex flex-column gap-2">
+    <p class="fs-3">The document status is: @State</p>
+    <div class="d-flex flex-row gap-3">
+        <div class="d-flex flex-row gap-2">
+            <Button class="btn btn-primary" Clicked="@(() => FireEvent(DocumentCommand.Approve))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.Approve) ? "block" : "none"))">@DocumentState.Approved.ToString()</Button>
+            <Button class="btn btn-secondary" Clicked="@(() => FireEvent(DocumentCommand.ToNone))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.ToNone) ? "block" : "none"))">@DocumentState.None.ToString()</Button>
+            <Button class="btn btn-dark" Clicked="@(() => FireEvent(DocumentCommand.Accept))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.Accept) ? "block" : "none"))">@DocumentState.Draft.ToString()</Button>
+            <Button class="btn btn-primary" Clicked="@(() => FireEvent(DocumentCommand.BeginReview))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.BeginReview) ? "block" : "none"))">@DocumentState.Review.ToString()</Button>
+            <Button class="btn btn-info" Clicked="@(() => FireEvent(DocumentCommand.ChangeNeeded))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.ChangeNeeded) ? "block" : "none"))">@DocumentState.ChangeRequested.ToString()</Button>
+            <Button class="btn btn-danger" Clicked="@(() => FireEvent(DocumentCommand.Decline))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.Decline) ? "block" : "none"))">@DocumentState.Declined.ToString()</Button>
+            <Button class="btn btn-primary" Clicked="@(() => FireEvent(DocumentCommand.MakeChanges))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.MakeChanges) ? "block" : "none"))">@DocumentState.Draft.ToString()</Button>
+            <Button class="btn btn-warning" Clicked="@(() => FireEvent(DocumentCommand.Reject))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.Reject) ? "block" : "none"))">@DocumentState.Review.ToString()</Button>
+            <Button class="btn btn-primary" Clicked="@(() => FireEvent(DocumentCommand.RestartReview))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.RestartReview) ? "block" : "none"))">@DocumentState.Review.ToString()</Button>
+            <Button class="btn btn-success" Clicked="@(() => FireEvent(DocumentCommand.Submit))" style="@("display: " + (_document.CanFireCommand(DocumentCommand.Submit) ? "block" : "none"))">@DocumentState.Submitted.ToString()</Button>
+        </div>
+        <MemoEdit Rows="25" ReplaceTab TabSize="4" Text="@_log" ReadOnly />
+    </div>
+ </div>
