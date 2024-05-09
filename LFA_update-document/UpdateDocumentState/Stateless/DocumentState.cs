@@ -9,4 +9,5 @@ public enum DocumentState
     Submitted,
     Declined,
     Approved,
+    Closed
 }

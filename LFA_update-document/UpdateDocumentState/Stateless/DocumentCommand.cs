@@ -11,5 +11,6 @@ public enum DocumentCommand
     Reject,
     RestartReview,
     Decline,
-    Accept
+    Accept,
+    Close
 }

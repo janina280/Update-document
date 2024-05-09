@@ -16,7 +16,8 @@ public class Document
             .Permit(DocumentCommand.MakeChanges, DocumentState.Draft);
 
         _machine.Configure(DocumentState.Draft)
-            .Permit(DocumentCommand.BeginReview, DocumentState.Review);
+            .Permit(DocumentCommand.BeginReview, DocumentState.Review)
+            .Permit(DocumentCommand.Decline, DocumentState.Declined);
 
 
         _machine.Configure(DocumentState.Review)
@@ -26,13 +27,10 @@ public class Document
         _machine.Configure(DocumentState.Submitted)
             .Permit(DocumentCommand.Decline, DocumentState.Declined)
             .Permit(DocumentCommand.Approve, DocumentState.Approved);
-
-        _machine.Configure(DocumentState.Approved)
-            .OnActivate(() => { ExecuteTransition(DocumentCommand.ToNone);})
-            .Permit(DocumentCommand.ToNone, DocumentState.None);
-
+            
         _machine.Configure(DocumentState.Declined)
-            .Permit(DocumentCommand.RestartReview, DocumentState.Review);
+            .Permit(DocumentCommand.RestartReview, DocumentState.Review)
+            .Permit(DocumentCommand.Close, DocumentState.Closed);
 
         _machine.Configure(DocumentState.ChangeRequested)
             .Permit(DocumentCommand.Reject, DocumentState.Review)
